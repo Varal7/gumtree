@@ -20,20 +20,20 @@
 
 package com.github.gumtreediff.gen.jdt;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-
+import com.github.gumtreediff.actions.model.Range;
 import com.github.gumtreediff.gen.jdt.cd.EntityType;
 import com.github.gumtreediff.tree.ITree;
 import com.github.gumtreediff.tree.TreeContext;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.CompilationUnit;
 
-import com.github.gumtreediff.gen.jdt.cd.EntityType;
-import com.github.gumtreediff.tree.ITree;
-import com.github.gumtreediff.tree.TreeContext;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 public abstract class AbstractJdtVisitor extends ASTVisitor {
+
+    private CompilationUnit cu;
 
     protected TreeContext context = new TreeContext();
 
@@ -41,6 +41,11 @@ public abstract class AbstractJdtVisitor extends ASTVisitor {
 
     public AbstractJdtVisitor() {
         super(true);
+    }
+
+    public AbstractJdtVisitor(CompilationUnit cu) {
+        super(true);
+        this.cu = cu;
     }
 
     public TreeContext getTreeContext() {
@@ -63,6 +68,11 @@ public abstract class AbstractJdtVisitor extends ASTVisitor {
         ITree t = context.createTree(type, label, typeName);
         t.setPos(startPosition);
         t.setLength(length);
+
+        t.setRange(new Range(cu.getLineNumber(startPosition),
+                cu.getLineNumber(startPosition + length),
+                cu.getColumnNumber(startPosition),
+                cu.getColumnNumber(startPosition + length)));
 
         if (trees.isEmpty())
             context.setRoot(t);

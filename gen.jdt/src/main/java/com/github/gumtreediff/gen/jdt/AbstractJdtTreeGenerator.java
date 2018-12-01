@@ -23,12 +23,11 @@ package com.github.gumtreediff.gen.jdt;
 import com.github.gumtreediff.gen.SyntaxException;
 import com.github.gumtreediff.gen.TreeGenerator;
 import com.github.gumtreediff.tree.TreeContext;
-import com.github.gumtreediff.gen.TreeGenerator;
-import com.github.gumtreediff.tree.TreeContext;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTParser;
+import org.eclipse.jdt.core.dom.CompilationUnit;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -64,13 +63,18 @@ public abstract class AbstractJdtTreeGenerator extends TreeGenerator {
         pOptions.put(JavaCore.COMPILER_DOC_COMMENT_SUPPORT, JavaCore.ENABLED);
         parser.setCompilerOptions(pOptions);
         parser.setSource(readerToCharArray(r));
-        AbstractJdtVisitor v = createVisitor();
-        ASTNode node = parser.createAST(null);
-        if ((node.getFlags() & ASTNode.MALFORMED) != 0) // bitwise flag to check if the node has a syntax error
-            throw new SyntaxException(this, r);
-        node.accept(v);
+        //AbstractJdtVisitor v = createVisitor();
+        //ASTNode node = parser.createAST(null);
+        //if ((node.getFlags() & ASTNode.MALFORMED) != 0) // bitwise flag to check if the node has a syntax error
+            //throw new SyntaxException(this, r);
+        //node.accept(v);
+        CompilationUnit cu = (CompilationUnit) parser.createAST(null);
+        AbstractJdtVisitor v = createVisitor(cu);
+        cu.accept(v);
         return v.getTreeContext();
     }
+
+    protected abstract AbstractJdtVisitor createVisitor(CompilationUnit cu);
 
     protected abstract AbstractJdtVisitor createVisitor();
 }

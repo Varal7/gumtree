@@ -20,6 +20,7 @@
 
 package com.github.gumtreediff.tree;
 
+import com.github.gumtreediff.actions.model.Range;
 import com.github.gumtreediff.tree.hash.HashUtils;
 
 import java.util.*;
@@ -39,6 +40,8 @@ public abstract class AbstractTree implements ITree {
     protected int depth;
 
     protected int hash;
+
+    protected Optional<Range> range;
 
     @Override
     public int getChildPosition(ITree child) {
@@ -317,6 +320,11 @@ public abstract class AbstractTree implements ITree {
         }
 
         @Override
+        public Optional<Range> getRange() {
+            return range;
+        }
+
+        @Override
         public int getEndPos() {
             return Collections.max(children, (t1, t2) -> t2.getPos() - t1.getPos()).getEndPos();
         }
@@ -348,6 +356,11 @@ public abstract class AbstractTree implements ITree {
 
         @Override
         public void setPos(int pos) {
+            throw unsupportedOperation();
+        }
+
+        @Override
+        public void setRange(Range range) {
             throw unsupportedOperation();
         }
 

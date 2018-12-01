@@ -54,11 +54,11 @@ public abstract class Addition extends Action {
 
     @Override
     public String format(TreeContext ctx) {
-        return String.format("===\n%s\n---\n%s\nto\n%s\nat %d",
+        return String.format("===\n%s\n---\n%s\nto\n%s\nat %s",
                 getName(),
                 node.toPrettyString(ctx),
                 parent.toPrettyString(ctx),
-                pos);
+                node.getRange().toString());
     }
 
 }

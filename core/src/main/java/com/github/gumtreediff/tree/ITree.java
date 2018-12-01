@@ -20,9 +20,12 @@
 
 package com.github.gumtreediff.tree;
 
+import com.github.gumtreediff.actions.model.Range;
+
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Optional;
 
 /**
  * Interface to represent abstract syntax trees.
@@ -165,6 +168,10 @@ public interface ITree {
     int getPos();
 
     void setPos(int pos);
+
+    Optional<Range> getRange();
+
+    void setRange(Range range);
 
     int getLength();
 

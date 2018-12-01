@@ -29,6 +29,10 @@ public class JdtVisitor  extends AbstractJdtVisitor {
         super();
     }
 
+    public JdtVisitor(CompilationUnit cu) {
+        super(cu);
+    }
+
     @Override
     public void preVisit(ASTNode n) {
         pushNode(n, getLabel(n));

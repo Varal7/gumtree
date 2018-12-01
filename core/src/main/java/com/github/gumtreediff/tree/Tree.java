@@ -20,10 +20,13 @@
 
 package com.github.gumtreediff.tree;
 
+import com.github.gumtreediff.actions.model.Range;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Optional;
 
 public class Tree extends AbstractTree implements ITree {
 
@@ -35,6 +38,8 @@ public class Tree extends AbstractTree implements ITree {
     private int pos;
     private int length;
     // End position
+
+    public Optional<Range> range;
 
     private AssociationMap metadata;
 
@@ -156,6 +161,16 @@ public class Tree extends AbstractTree implements ITree {
     @Override
     public void setPos(int pos) {
         this.pos = pos;
+    }
+
+    @Override
+    public void setRange(Range range) {
+        this.range = Optional.of(range);
+    }
+
+    @Override
+    public Optional<Range> getRange() {
+        return this.range;
     }
 
     @Override

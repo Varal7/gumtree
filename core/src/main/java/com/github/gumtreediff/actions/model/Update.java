@@ -43,20 +43,22 @@ public class Update extends Action {
 
     @Override
     public String toString() {
-        return String.format("===\n%s\n---\n%s\nreplace %s by %s",
+        return String.format("===\n%s\n---\n%s\nreplace %s by %s\nat %s\n",
                 getName(),
                 node.toShortString(),
                 node.getLabel(),
-                getValue());
+                getValue(),
+                node.getRange().toString());
     }
 
     @Override
     public String format(TreeContext ctx) {
-        return String.format("===\n%s\n---\n%s\nreplace %s by %s",
+        return String.format("===\n%s\n---\n%s\nreplace %s by %s\nat %s\n",
                 getName(),
                 node.toPrettyString(ctx),
                 node.getLabel(),
-                getValue());
+                getValue(),
+                node.getRange().toString());
     }
 
 }

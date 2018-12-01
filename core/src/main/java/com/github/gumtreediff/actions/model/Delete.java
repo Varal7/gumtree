@@ -43,9 +43,10 @@ public class Delete extends Action {
 
     @Override
     public String format(TreeContext ctx) {
-        return String.format("===\n%s\n---\n%s\n===",
+        return String.format("===\n%s\n---\n%s\n%s\n===",
                 getName(),
-                node.toPrettyString(ctx));
+                node.toPrettyString(ctx),
+                node.getRange().toString());
     }
 
 }
