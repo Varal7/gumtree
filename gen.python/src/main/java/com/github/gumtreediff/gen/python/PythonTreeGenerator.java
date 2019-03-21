@@ -19,6 +19,7 @@
 
 package com.github.gumtreediff.gen.python;
 
+import com.github.gumtreediff.actions.model.Range;
 import com.github.gumtreediff.gen.ExternalProcessTreeGenerator;
 import com.github.gumtreediff.gen.Register;
 import com.github.gumtreediff.gen.Registry;
@@ -108,6 +109,7 @@ public class PythonTreeGenerator extends ExternalProcessTreeGenerator {
         int endLine = Integer.parseInt(e.getAttributeByName(END_LINENO).getValue());
         int endColumn = Integer.parseInt(e.getAttributeByName(END_COL).getValue());
         t.setLength(lr.positionFor(endLine, endColumn) - lr.positionFor(line, column));
+        t.setRange(new Range(line, endLine, column, endColumn));
     }
 
     public String[] getCommandLine(String file) {
