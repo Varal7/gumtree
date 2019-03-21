@@ -20,6 +20,7 @@
 
 package com.github.gumtreediff.io;
 
+import com.github.gumtreediff.actions.model.Range;
 import com.github.gumtreediff.gen.Register;
 import com.github.gumtreediff.gen.TreeGenerator;
 import com.github.gumtreediff.matchers.MappingStore;
@@ -562,8 +563,14 @@ public final class TreeIoUtils {
             if (t.hasLabel()) writer.name("label").value(t.getLabel());
             if (context.hasLabelFor(t.getType())) writer.name("typeLabel").value(context.getTypeLabel(t.getType()));
             if (ITree.NO_VALUE != t.getPos()) {
+                Range range = t.getRange().orElseGet(() -> new Range(0, 0, 0, 0));
                 writer.name("pos").value(Integer.toString(t.getPos()));
                 writer.name("length").value(Integer.toString(t.getLength()));
+                writer.name("tree").value(Integer.toString(t.getId()));
+                writer.name("lineno").value(Integer.toString(range.getStartLine()));
+                writer.name("end_lineno").value(Integer.toString(range.getEndLine()));
+                writer.name("col").value(Integer.toString(range.getStartColumn()));
+                writer.name("end_col").value(Integer.toString(range.getEndColumn()));
             }
         }
 
@@ -582,7 +589,8 @@ public final class TreeIoUtils {
         @Override
         public void startSerialization() throws IOException {
             writer.beginObject();
-            writer.setIndent("\t");
+            //writer.setIndent("  ");
+            writer.setIndent("  ");
         }
 
         @Override
